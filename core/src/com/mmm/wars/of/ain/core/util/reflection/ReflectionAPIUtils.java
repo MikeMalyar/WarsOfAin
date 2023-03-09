@@ -83,6 +83,16 @@ public final class ReflectionAPIUtils {
         }
     }
 
+    public static <T> T initializeObjectByConstructor(Constructor constructor, List<Object> parameterValues) {
+        try {
+            constructor.setAccessible(true);
+            return (T) constructor.newInstance(parameterValues.toArray());
+        } catch (InvocationTargetException | InstantiationException
+                | IllegalAccessException e) {
+            return null;
+        }
+    }
+
     public static <T> boolean updateObjectFieldsMarkedWithAnnotation(Object object,
             Class<? extends java.lang.annotation.Annotation> annotationClass, Function<Field, T> valueFunction)
             throws IllegalAccessException {
